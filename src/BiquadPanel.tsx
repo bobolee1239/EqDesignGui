@@ -19,15 +19,24 @@ const NumberInput = ({value, step, onChange}: NumberInputProp) => {
     );
 }
 
+type BiquadPanelProp = {
+    prop: BiquadProp,
+    onTypeChange?: ChangeEventHandler<HTMLSelectElement>,
+    onFreqChange?: ChangeEventHandler<HTMLInputElement>,
+    onGainChange?: ChangeEventHandler<HTMLInputElement>,
+    onQChange?: ChangeEventHandler<HTMLInputElement>,
+}
+
 const BiquadPanel = ({
-    type, 
-    freq_hz,
-    gain_db,
-    q
-}: BiquadProp) => {
+    prop,
+    onTypeChange,
+    onFreqChange,
+    onGainChange,
+    onQChange
+}: BiquadPanelProp) => {
 
     const options = availableBiquadTypes
-                        .filter(e => e !== type)
+                        .filter(e => e !== prop.type)
                         .map(e => { return (
                             <option key={e} value={e}>{e}</option>
                         )});
@@ -35,22 +44,22 @@ const BiquadPanel = ({
     return (
         <div className={'biquad-panel'}>
             <InputGroup className={['mb-3', 'input-type'].join(' ')}>
-                <Form.Select>
-                    <option>{type}</option>
+                <Form.Select onChange={onTypeChange}>
+                    <option>{prop.type}</option>
                     {options}
                 </Form.Select>
             </InputGroup>
             <InputGroup className={['mb-3', 'input-freq'].join(' ')}>
                 <InputGroup.Text>Freq(Hz)</InputGroup.Text>
-                <NumberInput value={freq_hz} step={100} onChange={(e) => console.log('change cutoff freq')} />
+                <NumberInput value={prop.freq_hz} step={100} onChange={onFreqChange} />
             </InputGroup>
             <InputGroup className={['mb-3', 'input-q'].join(' ')}>
                 <InputGroup.Text>Q</InputGroup.Text>
-                <NumberInput value={q} step={0.01} onChange={(e) => console.log('change q value')} />
+                <NumberInput value={prop.q} step={0.01} onChange={onQChange} />
             </InputGroup>
             <InputGroup className={['mb-3', 'input-gain'].join(' ')}>
                 <InputGroup.Text>Gain(dB)</InputGroup.Text>
-                <NumberInput value={gain_db} step={0.1} onChange={(e) => console.log('change gain')} />
+                <NumberInput value={prop.gain_db} step={0.1} onChange={onGainChange} />
             </InputGroup>
         </div>
     );
