@@ -1,0 +1,22 @@
+
+.biquad-panel {
+    display: flex;
+    flex-direction: row;
+    margin: 0.1rem;
+}
+
+.input-type {
+    flex: 0.5
+}
+
+.input-freq {
+    flex: 1.5
+}
+
+.input-q {
+    flex: 0.6
+}
+
+.input-gain {
+    flex: 1.0
+}
