@@ -8,7 +8,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class ResponseMonitor extends React.Component {	
     render() {
-        const pts = this.props.response.map((e, idx) => {return {x: e.freq_hz, y:e.mag_db};});
+        const pts = this.props.response.map((e, idx) => {return {x: Math.log10(e.freq_hz), y:e.mag_db};});
 
         const options = {
             title: {
@@ -19,12 +19,28 @@ class ResponseMonitor extends React.Component {
                 dataPoints: pts,
             }],
             axisX: {
-                minimum: 0.0,
-                maximum: 24000.0,
-                // logarithmic: true,
-                // logarithmBase: 10,
+                title: 'Frequency (Hz)',
+                minimum: 1.5,
+                maximum: Math.log10(24000.0),
+                labelFormatter: (e) => {
+                    var lable = Math.pow(10 ,e.value);
+                    if(lable >= 1000.0)
+                    {
+                        lable = Math.round(lable/1000.0*10)/10;
+                        lable = CanvasJS.formatNumber(lable) +"k";
+                    }
+                    else
+                    {
+                        lable = Math.round(lable*10)/10;
+                        lable =  CanvasJS.formatNumber(lable);
+                    }
+                    return lable;
+                },
+                interval : 0.15,
+                includeZero :false
             },
             axisY: {
+                title: 'Magnitude (dB)',
                 minimum: -60.0,
                 maximum: 6.0,
             }

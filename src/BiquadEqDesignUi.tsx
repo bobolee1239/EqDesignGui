@@ -28,7 +28,7 @@ function BiquadEqDesignUi() {
     };
 
     const [freqResponse, setFreqResponse] = useState<ResponsePoint[]>([
-        createResponsePoint(0.0, 0.0),
+        createResponsePoint(1e-9, 0.0),
         createResponsePoint(24000.0, 0.0),
         ]);
 
