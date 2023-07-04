@@ -40,7 +40,6 @@ const BiquadControlBoard = ({
 
     const handleRefresh = () => {
         let currBiquads = biquads.slice();
-        console.log('Refresh on ', currBiquads);
         onRefresh?.(currBiquads);
     }
 
