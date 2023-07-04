@@ -1,8 +1,8 @@
 
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaPlus } from "react-icons/fa";
-import { MdRemoveCircle, MdModeEditOutline, MdRefresh} from "react-icons/md";
+import { MdRemoveCircle, MdModeEditOutline, MdSend} from "react-icons/md";
 
 import Biquad, {AvailabeBiquadType} from './Biquad';
 import BiquadPanel from './BiquadPanel';
@@ -43,6 +43,12 @@ const BiquadControlBoard = ({
         onRefresh?.(currBiquads);
     }
 
+    useEffect(() => {
+        handleRefresh();
+     }, [biquads]);
+
+
+
     const handleEnableEdit = () => {
         setEditing(!isEditing);
     }
@@ -65,11 +71,9 @@ const BiquadControlBoard = ({
 
     const getHandleChangeOn = (key: 'freq_hz' | 'gain_db' | 'q', idx: number) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
-            console.log('Change of ', key, ' on ', idx)
             let newBiquads = biquads.slice();
             newBiquads[idx].prop[key] = Number(e.target.value);
             setBiquads(newBiquads);
-            console.log(newBiquads);
             };
         };
 
@@ -95,29 +99,23 @@ const BiquadControlBoard = ({
 
     return (
         <div className={'board'}>
+            <div className={'board-panels'}>
+                {panels}
+            </div>
             <div className={'board-control'}>
+                <Button 
+                    className={'board-add-btn'} variant="outline-warning" 
+                    onClick={handleAddBiquad}
+                >
+                    <FaPlus />
+                </Button>
                 <Button 
                     className={'board-toolbar'} variant="outline-danger" 
                     onClick={handleEnableEdit}
                 >
                     <MdModeEditOutline />
                 </Button>
-                <Button 
-                    className={'board-toolbar'} variant="outline-success" 
-                    onClick={handleRefresh}
-                >
-                    <MdRefresh />
-                </Button>
             </div>
-            <div className={'board-panels'}>
-                {panels}
-            </div>
-            <Button 
-                className={'board-add-btn'} variant="outline-warning" 
-                onClick={handleAddBiquad}
-            >
-                <FaPlus />
-            </Button>
         </div>
     );
 }

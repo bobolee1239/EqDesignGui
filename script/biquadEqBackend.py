@@ -37,6 +37,8 @@ def postInput():
     for prop in biquad_props:
         biquad_type = convertType(prop['type'])
         if biquad_type is not None:
+            if prop['freq_hz'] < 0.1:
+                continue
             b, a = biquad_design.design(biquad_type, 
                                         prop['freq_hz'], prop['q'], prop['gain_db'])
             a = [float(v) for v in a]
@@ -44,12 +46,13 @@ def postInput():
             ret['coef'].append({'a': a, 'b': b})
             sos.append(b+a)
 
-    sos = np.array(sos, dtype=np.float32)
-    w, h = signal.sosfreqz(sos, worN=4096, fs=sr)
-    mags_db = 20.0*np.log10(np.maximum(np.abs(h), 1e-9))
-    freqs_hz = w
-    for freq_hz, mag_db in zip(freqs_hz, mags_db):
-        ret['response'].append({'freq_hz': float(freq_hz), 'mag_db': float(mag_db)})
+    if len(sos):
+        sos = np.array(sos, dtype=np.float32)
+        w, h = signal.sosfreqz(sos, worN=4096, fs=sr)
+        mags_db = 20.0*np.log10(np.maximum(np.abs(h), 1e-9))
+        freqs_hz = w
+        for freq_hz, mag_db in zip(freqs_hz, mags_db):
+            ret['response'].append({'freq_hz': float(freq_hz), 'mag_db': float(mag_db)})
 
     return jsonify(ret)
 

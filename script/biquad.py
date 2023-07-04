@@ -1,5 +1,4 @@
 import numpy as np 
-from scipy import signal
 
 class BiquadDesign:
     LPF = 0
@@ -41,8 +40,8 @@ class BiquadDesign:
                 1.0 - alpha
             ], dtype=np.float32
             )
-        b = b / a[0]
-        a = a / a[0]
+        b = b / (a[0]+1e-12)
+        a = a / (a[0]+1e-12)
         return b, a
 
     @staticmethod
@@ -60,8 +59,8 @@ class BiquadDesign:
                 1.0 - alpha
             ], dtype=np.float32
             )
-        b = b / a[0]
-        a = a / a[0]
+        b = b / (a[0]+1e-12)
+        a = a / (a[0]+1e-12)
         return b, a
 
     @staticmethod
@@ -79,6 +78,6 @@ class BiquadDesign:
                 1.0 - alpha/A,
             ], dtype=np.float32
             )
-        b = b / a[0]
-        a = a / a[0]
+        b = b / (a[0]+1e-12)
+        a = a / (a[0]+1e-12)
         return b, a

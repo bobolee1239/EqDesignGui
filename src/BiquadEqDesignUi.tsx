@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 // import axios, { AxiosRequestConfig, AxiosPromise, AxiosResponse } from 'axios';
 import Biquad from './Biquad';
@@ -33,7 +34,12 @@ function BiquadEqDesignUi() {
         ]);
 
     const handleUpdateFrequencyResponse = (biquads: Biquad[]) => {
-        const biquad_props = biquads.map((e) => e.prop);
+        const biquad_props = biquads.map((e) => e.prop).filter((e) => e.freq_hz > 10);
+        if (!biquad_props.length)
+        {
+            setFreqResponse([]);
+        }
+
         axios.post(
             'http://localhost:3006/biquads-response', {
                 'biquads': biquad_props,
@@ -46,12 +52,14 @@ function BiquadEqDesignUi() {
             })
             .catch(function (error) {
                 console.log(error);
+                setFreqResponse([]);
             });;
     }
 
     return (
         <div className="biquad-eq-design-ui">
             <ResponseMonitor response={freqResponse} />
+            {/* <Form.Text>Ab</Form.Text> */}
             <BiquadControlBoard onRefresh={handleUpdateFrequencyResponse}/>
         </div>
     );
