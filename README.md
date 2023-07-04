@@ -1,3 +1,15 @@
+# Setup
+
+Terminal 1
+```bash
+$ npm start
+```
+
+Terminal 2
+```bash
+$ python script/biquadEqBackend.py
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
