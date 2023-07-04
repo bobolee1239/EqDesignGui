@@ -4,7 +4,7 @@ import axios from 'axios';
 import Biquad from './Biquad';
 import BiquadControlBoard from './BiquadControlBoard';
 import ResponseMonitor from './ResponseMonitor';
-// import './App.css';
+import './BiquadEqDesignUi.css';
 
 type ResponsePoint = {
     freq_hz: number,

@@ -32,7 +32,7 @@ class ResponseMonitor extends React.Component {
           
         return (
             <div>
-            <CanvasJSChart options = {options}
+            <CanvasJSChart options = {options} containerProps={{width: "100%"}}
                 /* onRef = {ref => this.chart = ref} */
             />
             </div>
