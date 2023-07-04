@@ -95,29 +95,29 @@ const BiquadControlBoard = ({
 
     return (
         <div className={'board'}>
-            <div className={'board-panels'}>
-                {panels}
-            </div>
             <div className={'board-control'}>
                 <Button 
-                    className={'board-control-container'} variant="outline-danger" 
+                    className={'board-toolbar'} variant="outline-danger" 
                     onClick={handleEnableEdit}
                 >
                     <MdModeEditOutline />
                 </Button>
                 <Button 
-                    className={'board-control-container'} variant="outline-warning" 
-                    onClick={handleAddBiquad}
-                >
-                    <FaPlus />
-                </Button>
-                <Button 
-                    className={'board-control-container'} variant="outline-success" 
+                    className={'board-toolbar'} variant="outline-success" 
                     onClick={handleRefresh}
                 >
                     <MdRefresh />
                 </Button>
             </div>
+            <div className={'board-panels'}>
+                {panels}
+            </div>
+            <Button 
+                className={'board-add-btn'} variant="outline-warning" 
+                onClick={handleAddBiquad}
+            >
+                <FaPlus />
+            </Button>
         </div>
     );
 }

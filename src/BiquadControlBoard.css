@@ -26,9 +26,13 @@
 
 .board-control {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
-.board-control-container {
-    margin: 1rem 0.5rem;
+.board-toolbar {
+    margin: 0 0.1rem 0.2rem 0.1rem;
+}
+
+.board-add-btn {
+    margin: 0;
 }
