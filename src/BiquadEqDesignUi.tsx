@@ -11,15 +11,15 @@ type ResponsePoint = {
     mag_db: number
 };
 
-type FilterCoef = {
-    a: number[],
-    b: number[]
-}
+// type FilterCoef = {
+//     a: number[],
+//     b: number[]
+// }
 
-type BiquadDesignResponse = {
-    coef: FilterCoef[],
-    response: ResponsePoint[]
-};
+// type BiquadDesignResponse = {
+//     coef: FilterCoef[],
+//     response: ResponsePoint[]
+// };
 
 function BiquadEqDesignUi() {
 
