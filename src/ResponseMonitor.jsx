@@ -8,29 +8,35 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class ResponseMonitor extends React.Component {	
     render() {
-      const options = {
-        title: {
-          text: "Basic Column Chart in React"
-        },
-        data: [{				
-          type: "column",
-          dataPoints: [
-            { label: "Apple",  y: 10  },
-            { label: "Orange", y: 15  },
-            { label: "Banana", y: 25  },
-            { label: "Mango",  y: 30  },
-            { label: "Grape",  y: 28  }
-          ]
-        }]
-      }
+        const pts = this.props.response.map((e, idx) => {return {x: e.freq_hz, y:e.mag_db};});
+
+        const options = {
+            title: {
+                text: "Frequency Response"
+            },
+            data: [{				
+                type: "line",
+                dataPoints: pts,
+            }],
+            axisX: {
+                minimum: 0.0,
+                maximum: 24000.0,
+                // logarithmic: true,
+                // logarithmBase: 10,
+            },
+            axisY: {
+                minimum: -60.0,
+                maximum: 6.0,
+            }
+        }
           
-      return (
-        <div>
-          <CanvasJSChart options = {options}
-            /* onRef = {ref => this.chart = ref} */
-          />
-          </div>
-      );
+        return (
+            <div>
+            <CanvasJSChart options = {options}
+                /* onRef = {ref => this.chart = ref} */
+            />
+            </div>
+        );
     }
   }
 

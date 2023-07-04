@@ -2,7 +2,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaPlus } from "react-icons/fa";
-import { MdRemoveCircle, MdModeEditOutline, MdDone} from "react-icons/md";
+import { MdRemoveCircle, MdModeEditOutline, MdRefresh} from "react-icons/md";
 
 import Biquad, {AvailabeBiquadType} from './Biquad';
 import BiquadPanel from './BiquadPanel';
@@ -21,11 +21,11 @@ const createDefaultBiquad = () => {
 type BcbSubmitFcn = (biquads: Biquad[]) => void;
 
 type BiquadControlBoardProp = {
-   onSubmit?: BcbSubmitFcn 
+   onRefresh?: BcbSubmitFcn 
 };
 
 const BiquadControlBoard = ({
-    onSubmit
+    onRefresh
 }: BiquadControlBoardProp) => {
     const [biquads, setBiquads] = useState<Biquad[]>([createDefaultBiquad(), ]);
     const [isEditing, setEditing] = useState(false);
@@ -38,10 +38,10 @@ const BiquadControlBoard = ({
         }
     };
 
-    const handleSubmit = () => {
+    const handleRefresh = () => {
         let currBiquads = biquads.slice();
-        console.log('submit on ', currBiquads);
-        onSubmit?.(currBiquads);
+        console.log('Refresh on ', currBiquads);
+        onRefresh?.(currBiquads);
     }
 
     const handleEnableEdit = () => {
@@ -83,9 +83,9 @@ const BiquadControlBoard = ({
                     <MdRemoveCircle color='red' size={30}/>
              </Button>) : null;
         return (
-            <div className={'panel-row'}>
+            <div key={idx} className={'panel-row'}>
                 {editBtn}
-                <BiquadPanel key={idx} prop={e.prop} 
+                <BiquadPanel prop={e.prop} 
                     onTypeChange={getHandleTypeChangeOn(idx)}
                     onFreqChange={getHandleChangeOn('freq_hz', idx)}
                     onQChange={getHandleChangeOn('q', idx)}
@@ -114,9 +114,9 @@ const BiquadControlBoard = ({
                 </Button>
                 <Button 
                     className={'board-control-container'} variant="outline-success" 
-                    onClick={handleSubmit}
+                    onClick={handleRefresh}
                 >
-                    <MdDone />
+                    <MdRefresh />
                 </Button>
             </div>
         </div>

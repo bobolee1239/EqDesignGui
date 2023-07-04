@@ -1,11 +1,11 @@
 import React from 'react';
-import BiquadControlBoard from './BiquadControlBoard';
+import BiquadEqDesignUi from './BiquadEqDesignUi';
 // import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <BiquadControlBoard />
+      <BiquadEqDesignUi />
     </div>
   );
 }
