@@ -2,7 +2,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaPlus } from "react-icons/fa";
-import { MdRemoveCircle, MdModeEditOutline} from "react-icons/md";
+import { MdRemoveCircle, MdModeEditOutline, MdDone} from "react-icons/md";
 
 import Biquad, {AvailabeBiquadType} from './Biquad';
 import BiquadPanel from './BiquadPanel';
@@ -18,7 +18,15 @@ const createDefaultBiquad = () => {
         });
 }
 
-const BiquadControlBoard = () => {
+type BcbSubmitFcn = (biquads: Biquad[]) => void;
+
+type BiquadControlBoardProp = {
+   onSubmit?: BcbSubmitFcn 
+};
+
+const BiquadControlBoard = ({
+    onSubmit
+}: BiquadControlBoardProp) => {
     const [biquads, setBiquads] = useState<Biquad[]>([createDefaultBiquad(), ]);
     const [isEditing, setEditing] = useState(false);
 
@@ -29,6 +37,12 @@ const BiquadControlBoard = () => {
             setBiquads(newBiquads);
         }
     };
+
+    const handleSubmit = () => {
+        let currBiquads = biquads.slice();
+        console.log('submit on ', currBiquads);
+        onSubmit?.(currBiquads);
+    }
 
     const handleEnableEdit = () => {
         setEditing(!isEditing);
@@ -93,10 +107,16 @@ const BiquadControlBoard = () => {
                     <MdModeEditOutline />
                 </Button>
                 <Button 
-                    className={'board-control-container'} variant="outline-success" 
+                    className={'board-control-container'} variant="outline-warning" 
                     onClick={handleAddBiquad}
                 >
                     <FaPlus />
+                </Button>
+                <Button 
+                    className={'board-control-container'} variant="outline-success" 
+                    onClick={handleSubmit}
+                >
+                    <MdDone />
                 </Button>
             </div>
         </div>
