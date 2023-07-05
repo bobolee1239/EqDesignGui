@@ -6,19 +6,6 @@ import { BiquadProp, availableBiquadTypes } from './Biquad';
 import 'bootstrap/dist/css/bootstrap.css';
 import './BiquadPanel.css';
 
-type NumberInputProp = {
-    value: number,
-    step: number, 
-    onChange?: ChangeEventHandler<HTMLInputElement>,
-}
-
-const NumberInput = ({value, step, onChange}: NumberInputProp) => {
-    return (
-        <input className={'form-control'}
-            type={'number'} step={`${step}`} value={`${value}`} onChange={onChange} />
-    );
-}
-
 type BiquadPanelProp = {
     prop: BiquadProp,
     onTypeChange?: ChangeEventHandler<HTMLSelectElement>,
@@ -51,15 +38,24 @@ const BiquadPanel = ({
             </InputGroup>
             <InputGroup className={['mb-3', 'input-freq'].join(' ')}>
                 <InputGroup.Text>Freq(Hz)</InputGroup.Text>
-                <NumberInput value={prop.freq_hz} step={100} onChange={onFreqChange} />
+                <Form.Control 
+                    type={'number'} step={100} 
+                    onChange={onFreqChange} defaultValue={prop.freq_hz}
+                />
             </InputGroup>
             <InputGroup className={['mb-3', 'input-q'].join(' ')}>
                 <InputGroup.Text>Q</InputGroup.Text>
-                <NumberInput value={prop.q} step={0.01} onChange={onQChange} />
+                <Form.Control 
+                    type={'number'} step={0.01} 
+                    onChange={onQChange} defaultValue={prop.q}
+                />
             </InputGroup>
             <InputGroup className={['mb-3', 'input-gain'].join(' ')}>
                 <InputGroup.Text>Gain(dB)</InputGroup.Text>
-                <NumberInput value={prop.gain_db} step={0.1} onChange={onGainChange} />
+                <Form.Control 
+                    type={'number'} step={0.1} 
+                    onChange={onGainChange} defaultValue={prop.gain_db}
+                />
             </InputGroup>
         </div>
     );
