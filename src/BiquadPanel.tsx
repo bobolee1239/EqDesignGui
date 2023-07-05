@@ -30,27 +30,27 @@ const BiquadPanel = ({
 
     return (
         <div className={'biquad-panel'}>
-            <InputGroup className={['mb-3', 'input-type'].join(' ')}>
+            <InputGroup className={['mb-1', 'input-type'].join(' ')}>
                 <Form.Select onChange={onTypeChange}>
                     <option>{prop.type}</option>
                     {options}
                 </Form.Select>
             </InputGroup>
-            <InputGroup className={['mb-3', 'input-freq'].join(' ')}>
+            <InputGroup className={['mb-1', 'input-freq'].join(' ')}>
                 <InputGroup.Text>Freq(Hz)</InputGroup.Text>
                 <Form.Control 
                     type={'number'} step={100} 
                     onChange={onFreqChange} defaultValue={prop.freq_hz}
                 />
             </InputGroup>
-            <InputGroup className={['mb-3', 'input-q'].join(' ')}>
+            <InputGroup className={['mb-1', 'input-q'].join(' ')}>
                 <InputGroup.Text>Q</InputGroup.Text>
                 <Form.Control 
                     type={'number'} step={0.01} 
                     onChange={onQChange} defaultValue={prop.q}
                 />
             </InputGroup>
-            <InputGroup className={['mb-3', 'input-gain'].join(' ')}>
+            <InputGroup className={['mb-1', 'input-gain'].join(' ')}>
                 <InputGroup.Text>Gain(dB)</InputGroup.Text>
                 <Form.Control 
                     type={'number'} step={0.1} 

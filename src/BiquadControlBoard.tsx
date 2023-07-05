@@ -1,8 +1,8 @@
 
 import React, {ChangeEvent, useState, useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
-import { FaPlus } from "react-icons/fa";
-import { MdRemoveCircle, MdModeEditOutline, MdSend} from "react-icons/md";
+import Form from 'react-bootstrap/Form';
+import { MdRemoveCircle} from "react-icons/md";
 
 import Biquad, {AvailabeBiquadType} from './Biquad';
 import BiquadPanel from './BiquadPanel';
@@ -21,14 +21,17 @@ const createDefaultBiquad = () => {
 type BcbSubmitFcn = (biquads: Biquad[]) => void;
 
 type BiquadControlBoardProp = {
-   onRefresh?: BcbSubmitFcn 
+    isEditing: boolean,
+    triggerAdd: number,
+    onRefresh?: BcbSubmitFcn 
 };
 
 const BiquadControlBoard = ({
+    isEditing,
+    triggerAdd,
     onRefresh
 }: BiquadControlBoardProp) => {
-    const [biquads, setBiquads] = useState<Biquad[]>([createDefaultBiquad(), ]);
-    const [isEditing, setEditing] = useState(false);
+    const [biquads, setBiquads] = useState<Biquad[]>([]);
 
     const handleAddBiquad = () => {
         if (biquads.length < 5) {
@@ -47,11 +50,7 @@ const BiquadControlBoard = ({
         handleRefresh();
      }, [biquads]);
 
-
-
-    const handleEnableEdit = () => {
-        setEditing(!isEditing);
-    }
+    useEffect(handleAddBiquad, [triggerAdd]);
 
     const getHandleRemoveOn = (idx: number) => {
         return () => {
@@ -86,7 +85,7 @@ const BiquadControlBoard = ({
                     <MdRemoveCircle color='red' size={30}/>
              </Button>) : null;
         return (
-            <div key={idx} className={'panel-row'}>
+            <Form.Group key={idx} className={'panel-row'}>
                 {editBtn}
                 <BiquadPanel prop={e.prop} 
                     onTypeChange={getHandleTypeChangeOn(idx)}
@@ -94,29 +93,13 @@ const BiquadControlBoard = ({
                     onQChange={getHandleChangeOn('q', idx)}
                     onGainChange={getHandleChangeOn('gain_db', idx)}
                 />
-            </div>
+            </Form.Group>
         )});
 
     return (
-        <div className={'board'}>
-            <div className={'board-panels'}>
-                {panels}
-            </div>
-            <div className={'board-control'}>
-                <Button 
-                    className={'board-add-btn'} variant="outline-warning" 
-                    onClick={handleAddBiquad}
-                >
-                    <FaPlus />
-                </Button>
-                <Button 
-                    className={'board-toolbar'} variant="outline-danger" 
-                    onClick={handleEnableEdit}
-                >
-                    <MdModeEditOutline />
-                </Button>
-            </div>
-        </div>
+        <Form>
+            {panels}
+        </Form>
     );
 }
 

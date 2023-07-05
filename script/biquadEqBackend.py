@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -10,8 +11,8 @@ from scipy import signal
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/biquads-response', methods=['POST'])
-def postInput():
+@app.route('/design-biquads', methods=['POST'])
+def designBiquad():
     def convertType(type: str):
         type = type.lower()
         ret = None
@@ -56,6 +57,18 @@ def postInput():
 
     return jsonify(ret)
 
+@app.route('/download-biquads', methods=['POST'])
+def downloadBiquad():
+    data = request.get_json()
+    print(data)
+
+    fpath = data['path']
+    coefs = data['filters_coef']
+    with open(fpath, 'w', encoding='utf-8') as fp:
+        json.dump({'filter': coefs}, fp)
+
+    ret = {'status': 200}
+    return jsonify(ret)
 
 if __name__ == '__main__':
     app.run(host='localhost', port=3006, debug=True)
